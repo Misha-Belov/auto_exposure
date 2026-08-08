@@ -1,0 +1,462 @@
+запцск:
+
+- ssh rpi5@rpi5.local
+- ввести пароль qwerty
+- в другом терминале:    vncviewer
+- нажать подключиться
+- username: rpi5
+  password: qwerty
+- тыкнуть OK
+- открыть терминал rpi
+- проверить подключение: rpicam-hello --list-cameras
+- включить камеру:       rpicam-hello --qt-preview --timeout 0
+- После каждой новой SSH-сессии активировать окружение:
+	cd ~/camera-lab
+	source .venv/bin/activate
+	
+	
+=== Свойства камеры ===
+{'ColorFilterArrangement': 0,
+ 'Location': 2,
+ 'Model': 'imx477',
+ 'PipelineHandler': 'rpi/pisp',
+ 'PixelArrayActiveAreas': [(8, 16, 4056, 3040)],
+ 'PixelArraySize': (4056, 3040),
+ 'Rotation': 180,
+ 'ScalerCropMaximum': (0, 0, 0, 0),
+ 'SystemDevices': (20753,
+                   20754,
+                   20755,
+                   20756,
+                   20757,
+                   20758,
+                   20759,
+                   20739,
+                   20740,
+                   20741,
+                   20742),
+ 'UnitCellSize': (1550, 1550)}
+
+=== Режимы сенсора ===
+[1:30:17.939266023] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:17.939293578] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:17.939739174] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 1332x990-BGGR_PISP_COMP1/RAW
+[1:30:17.939852230] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 1332x990-SBGGR10_1X10/RAW - Selected CFE format: 1332x990-PC1B/RAW
+[1:30:17.950907394] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:17.950968302] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:17.951681047] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1080-BGGR_PISP_COMP1/RAW
+[1:30:17.951783678] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1080-SBGGR10_1X10/RAW - Selected CFE format: 2028x1080-PC1B/RAW
+[1:30:17.956532005] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:17.956622357] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:17.957626086] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1520-BGGR_PISP_COMP1/RAW
+[1:30:17.957763031] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR10_1X10/RAW - Selected CFE format: 2028x1520-PC1B/RAW
+[1:30:17.967969968] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:17.968058227] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:17.968840307] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x2160-BGGR_PISP_COMP1/RAW
+[1:30:17.968999048] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x2160-SBGGR10_1X10/RAW - Selected CFE format: 4056x2160-PC1B/RAW
+[1:30:17.985494322] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:17.985549526] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:17.986357735] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x3040-BGGR_PISP_COMP1/RAW
+[1:30:17.986517125] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x3040-SBGGR10_1X10/RAW - Selected CFE format: 4056x3040-PC1B/RAW
+[1:30:18.002740118] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.002774137] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.003313363] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 1332x990-BGGR_PISP_COMP1/RAW
+[1:30:18.003414827] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 1332x990-SBGGR12_1X12/RAW - Selected CFE format: 1332x990-PC1B/RAW
+[1:30:18.010120148] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.010175352] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.010867819] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1080-BGGR_PISP_COMP1/RAW
+[1:30:18.011032005] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1080-SBGGR12_1X12/RAW - Selected CFE format: 2028x1080-PC1B/RAW
+[1:30:18.016642357] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.016671394] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.017391843] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1520-BGGR_PISP_COMP1/RAW
+[1:30:18.017556918] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR12_1X12/RAW - Selected CFE format: 2028x1520-PC1B/RAW
+[1:30:18.025191430] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.025261709] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.026401790] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x2160-BGGR_PISP_COMP1/RAW
+[1:30:18.026625699] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x2160-SBGGR12_1X12/RAW - Selected CFE format: 4056x2160-PC1B/RAW
+[1:30:18.041531314] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.041613259] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.042573654] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x3040-BGGR_PISP_COMP1/RAW
+[1:30:18.042789822] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x3040-SBGGR12_1X12/RAW - Selected CFE format: 4056x3040-PC1B/RAW
+[1:30:18.059014316] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.059055427] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.059666635] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 1332x990-SBGGR16/RAW
+[1:30:18.059802839] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 1332x990-SBGGR8_1X8/RAW - Selected CFE format: 1332x990-BYR2/RAW
+[1:30:18.067020016] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.067064775] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.067889225] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1080-SBGGR16/RAW
+[1:30:18.068143412] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1080-SBGGR8_1X8/RAW - Selected CFE format: 2028x1080-BYR2/RAW
+[1:30:18.078929222] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.078971074] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.079716857] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1520-SBGGR16/RAW
+[1:30:18.079869932] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR8_1X8/RAW - Selected CFE format: 2028x1520-BYR2/RAW
+[1:30:18.091822028] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.091891602] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.096648448] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x2160-SBGGR16/RAW
+[1:30:18.098171550] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x2160-SBGGR8_1X8/RAW - Selected CFE format: 4056x2160-BYR2/RAW
+[1:30:18.123191009] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.123247472] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.123941439] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x3040-SBGGR16/RAW
+[1:30:18.124105200] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x3040-SBGGR8_1X8/RAW - Selected CFE format: 4056x3040-BYR2/RAW
+[{'bit_depth': 10,
+  'crop_limits': (696, 528, 2664, 1980),
+  'exposure_limits': (31, 667234896, 20000),
+  'format': SRGGB10_CSI2P,
+  'fps': 120.5,
+  'size': (1332, 990),
+  'unpacked': 'SRGGB10'},
+ {'bit_depth': 10,
+  'crop_limits': (0, 440, 4056, 2160),
+  'exposure_limits': (47, 674181621, 20000),
+  'format': SRGGB10_CSI2P,
+  'fps': 74.74,
+  'size': (2028, 1080),
+  'unpacked': 'SRGGB10'},
+ {'bit_depth': 10,
+  'crop_limits': (0, 0, 4056, 3040),
+  'exposure_limits': (47, 674181621, 20000),
+  'format': SRGGB10_CSI2P,
+  'fps': 53.77,
+  'size': (2028, 1520),
+  'unpacked': 'SRGGB10'},
+ {'bit_depth': 10,
+  'crop_limits': (0, 440, 4056, 2160),
+  'exposure_limits': (92, 694422939, 20000),
+  'format': SRGGB10_CSI2P,
+  'fps': 19.58,
+  'size': (4056, 2160),
+  'unpacked': 'SRGGB10'},
+ {'bit_depth': 10,
+  'crop_limits': (0, 0, 4056, 3040),
+  'exposure_limits': (92, 694422939, 20000),
+  'format': SRGGB10_CSI2P,
+  'fps': 14.0,
+  'size': (4056, 3040),
+  'unpacked': 'SRGGB10'},
+ {'bit_depth': 12,
+  'crop_limits': (696, 528, 2664, 1980),
+  'exposure_limits': (37, 667234896, 20000),
+  'format': SRGGB12_CSI2P,
+  'fps': 101.68,
+  'size': (1332, 990),
+  'unpacked': 'SRGGB12'},
+ {'bit_depth': 12,
+  'crop_limits': (0, 440, 4056, 2160),
+  'exposure_limits': (56, 674181621, 20000),
+  'format': SRGGB12_CSI2P,
+  'fps': 62.81,
+  'size': (2028, 1080),
+  'unpacked': 'SRGGB12'},
+ {'bit_depth': 12,
+  'crop_limits': (0, 0, 4056, 3040),
+  'exposure_limits': (56, 674181621, 20000),
+  'format': SRGGB12_CSI2P,
+  'fps': 45.19,
+  'size': (2028, 1520),
+  'unpacked': 'SRGGB12'},
+ {'bit_depth': 12,
+  'crop_limits': (0, 440, 4056, 2160),
+  'exposure_limits': (110, 694422939, 20000),
+  'format': SRGGB12_CSI2P,
+  'fps': 16.39,
+  'size': (4056, 2160),
+  'unpacked': 'SRGGB12'},
+ {'bit_depth': 12,
+  'crop_limits': (0, 0, 4056, 3040),
+  'exposure_limits': (110, 694422939, 20000),
+  'format': SRGGB12_CSI2P,
+  'fps': 11.72,
+  'size': (4056, 3040),
+  'unpacked': 'SRGGB12'},
+ {'bit_depth': 8,
+  'crop_limits': (696, 528, 2664, 1980),
+  'exposure_limits': (26, 667234896, 20000),
+  'format': SRGGB8,
+  'fps': 147.91,
+  'size': (1332, 990),
+  'unpacked': 'SRGGB8'},
+ {'bit_depth': 8,
+  'crop_limits': (0, 440, 4056, 2160),
+  'exposure_limits': (38, 674181621, 20000),
+  'format': SRGGB8,
+  'fps': 92.27,
+  'size': (2028, 1080),
+  'unpacked': 'SRGGB8'},
+ {'bit_depth': 8,
+  'crop_limits': (0, 0, 4056, 3040),
+  'exposure_limits': (38, 674181621, 20000),
+  'format': SRGGB8,
+  'fps': 66.38,
+  'size': (2028, 1520),
+  'unpacked': 'SRGGB8'},
+ {'bit_depth': 8,
+  'crop_limits': (0, 440, 4056, 2160),
+  'exposure_limits': (74, 694422939, 20000),
+  'format': SRGGB8,
+  'fps': 24.32,
+  'size': (4056, 2160),
+  'unpacked': 'SRGGB8'},
+ {'bit_depth': 8,
+  'crop_limits': (0, 0, 4056, 3040),
+  'exposure_limits': (74, 694422939, 20000),
+  'format': SRGGB8,
+  'fps': 17.39,
+  'size': (4056, 3040),
+  'unpacked': 'SRGGB8'}]
+[1:30:18.160243396] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:30:18.160289952] [3100]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:30:18.160751400] [3097]  INFO Camera camera.cpp:1216 configuring streams: (0) 1280x720-RGB888/Rec709/Rec709/None/Full (1) 2028x1080-BGGR_PISP_COMP1/RAW
+[1:30:18.160846011] [3100]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1080-SBGGR12_1X12/RAW - Selected CFE format: 2028x1080-PC1B/RAW
+
+=== Доступные параметры управления ===
+AeConstraintMode: (0, 3, 0)
+AeEnable: (False, True, True)
+AeExposureMode: (0, 3, 0)
+AeFlickerMode: (0, 1, 0)
+AeFlickerPeriod: (100, 1000000, None)
+AeMeteringMode: (0, 3, 0)
+AnalogueGain: (1.0, 22.2608699798584, 1.0)
+AnalogueGainMode: (0, 1, 0)
+AwbEnable: (False, True, None)
+AwbMode: (0, 7, 0)
+Brightness: (-1.0, 1.0, 0.0)
+CnnEnableInputTensor: (False, True, False)
+ColourCorrectionMatrix: (0.0, 8.0, None)
+ColourGains: (0.0, 32.0, None)
+ColourTemperature: (100, 100000, None)
+Contrast: (0.0, 32.0, 1.0)
+ExposureTime: (56, 674181621, 20000)
+ExposureTimeMode: (0, 1, 0)
+ExposureValue: (-8.0, 8.0, 0.0)
+FrameDurationLimits: (15920, 674193371, (33333, 33333))
+HdrMode: (0, 4, 0)
+NoiseReductionMode: (0, 4, 0)
+Saturation: (0.0, 32.0, 1.0)
+ScalerCrop: ((0, 440, 162, 92), (0, 440, 4056, 2160), (108, 440, 3840, 2160))
+Sharpness: (0.0, 16.0, 1.0)
+StatsOutputEnable: (False, True, False)
+SyncFrames: (100, 100000, 1000)
+SyncMode: (0, 2, 0)
+
+=====================================raw_modes==================================================================
+
+[1:36:25.382534241] [3148]  INFO Camera camera_manager.cpp:340 libcamera v0.7.1+rpt20260609
+[1:36:25.392914271] [3151]  INFO RPI pisp.cpp:720 libpisp version v1.6.0 29-06-2026 (16:17:40)
+[1:36:25.404979476] [3151]  INFO IPAProxy ipa_proxy.cpp:184 Using tuning file /usr/share/libcamera/ipa/rpi/pisp/imx477.json
+[1:36:25.413640665] [3151]  INFO Camera camera_manager.cpp:223 Adding camera '/base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a' for pipeline handler rpi/pisp
+[1:36:25.413685868] [3151]  INFO RPI pisp.cpp:1181 Registered camera /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a to CFE device /dev/media0 and ISP device /dev/media1 using PiSP variant BCM2712_D0
+Доступные режимы сенсора:
+
+[1:36:25.418321150] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.418372316] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.419220394] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 1332x990-BGGR_PISP_COMP1/RAW
+[1:36:25.419439451] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 1332x990-SBGGR10_1X10/RAW - Selected CFE format: 1332x990-PC1B/RAW
+[1:36:25.425870685] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.425919556] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.428616346] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1080-BGGR_PISP_COMP1/RAW
+[1:36:25.428823903] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1080-SBGGR10_1X10/RAW - Selected CFE format: 2028x1080-PC1B/RAW
+[1:36:25.434410521] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.434483355] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.435314711] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1520-BGGR_PISP_COMP1/RAW
+[1:36:25.435518304] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR10_1X10/RAW - Selected CFE format: 2028x1520-PC1B/RAW
+[1:36:25.444193864] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.444260105] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.445053757] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x2160-BGGR_PISP_COMP1/RAW
+[1:36:25.445280646] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x2160-SBGGR10_1X10/RAW - Selected CFE format: 4056x2160-PC1B/RAW
+[1:36:25.459715048] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.459754011] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.460349217] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x3040-BGGR_PISP_COMP1/RAW
+[1:36:25.460489996] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x3040-SBGGR10_1X10/RAW - Selected CFE format: 4056x3040-PC1B/RAW
+[1:36:25.484149347] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.484186385] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.485354835] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 1332x990-BGGR_PISP_COMP1/RAW
+[1:36:25.487536882] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 1332x990-SBGGR12_1X12/RAW - Selected CFE format: 1332x990-PC1B/RAW
+[1:36:25.494551341] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.494596915] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.496590758] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1080-BGGR_PISP_COMP1/RAW
+[1:36:25.496732018] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1080-SBGGR12_1X12/RAW - Selected CFE format: 2028x1080-PC1B/RAW
+[1:36:25.501965968] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.502016228] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.502764824] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1520-BGGR_PISP_COMP1/RAW
+[1:36:25.503051288] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR12_1X12/RAW - Selected CFE format: 2028x1520-PC1B/RAW
+[1:36:25.514752713] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.514786362] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.515311735] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x2160-BGGR_PISP_COMP1/RAW
+[1:36:25.515434624] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x2160-SBGGR12_1X12/RAW - Selected CFE format: 4056x2160-PC1B/RAW
+[1:36:25.527951146] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.527988979] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.528657205] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x3040-BGGR_PISP_COMP1/RAW
+[1:36:25.528796927] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x3040-SBGGR12_1X12/RAW - Selected CFE format: 4056x3040-PC1B/RAW
+[1:36:25.551371774] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.551426848] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.552443205] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 1332x990-SBGGR16/RAW
+[1:36:25.552657151] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 1332x990-SBGGR8_1X8/RAW - Selected CFE format: 1332x990-BYR2/RAW
+[1:36:25.564192519] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.564228094] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.564712763] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1080-SBGGR16/RAW
+[1:36:25.564809782] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1080-SBGGR8_1X8/RAW - Selected CFE format: 2028x1080-BYR2/RAW
+[1:36:25.573302933] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.573360655] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.574230770] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1520-SBGGR16/RAW
+[1:36:25.574447901] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR8_1X8/RAW - Selected CFE format: 2028x1520-BYR2/RAW
+[1:36:25.583573666] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.583601981] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.584212539] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x2160-SBGGR16/RAW
+[1:36:25.584334318] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x2160-SBGGR8_1X8/RAW - Selected CFE format: 4056x2160-BYR2/RAW
+[1:36:25.612460061] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:36:25.612524209] [3151]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:36:25.613097805] [3148]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x3040-SBGGR16/RAW
+[1:36:25.613380528] [3151]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x3040-SBGGR8_1X8/RAW - Selected CFE format: 4056x3040-BYR2/RAW
+[0] size=(1332, 990), depth=10 бит, fps=120.50, packed=SRGGB10_CSI2P, unpacked=SRGGB10, crop=(696, 528, 2664, 1980)
+[1] size=(2028, 1080), depth=10 бит, fps=74.74, packed=SRGGB10_CSI2P, unpacked=SRGGB10, crop=(0, 440, 4056, 2160)
+[2] size=(2028, 1520), depth=10 бит, fps=53.77, packed=SRGGB10_CSI2P, unpacked=SRGGB10, crop=(0, 0, 4056, 3040)
+[3] size=(4056, 2160), depth=10 бит, fps=19.58, packed=SRGGB10_CSI2P, unpacked=SRGGB10, crop=(0, 440, 4056, 2160)
+[4] size=(4056, 3040), depth=10 бит, fps=14.00, packed=SRGGB10_CSI2P, unpacked=SRGGB10, crop=(0, 0, 4056, 3040)
+[5] size=(1332, 990), depth=12 бит, fps=101.68, packed=SRGGB12_CSI2P, unpacked=SRGGB12, crop=(696, 528, 2664, 1980)
+[6] size=(2028, 1080), depth=12 бит, fps=62.81, packed=SRGGB12_CSI2P, unpacked=SRGGB12, crop=(0, 440, 4056, 2160)
+[7] size=(2028, 1520), depth=12 бит, fps=45.19, packed=SRGGB12_CSI2P, unpacked=SRGGB12, crop=(0, 0, 4056, 3040)
+[8] size=(4056, 2160), depth=12 бит, fps=16.39, packed=SRGGB12_CSI2P, unpacked=SRGGB12, crop=(0, 440, 4056, 2160)
+[9] size=(4056, 3040), depth=12 бит, fps=11.72, packed=SRGGB12_CSI2P, unpacked=SRGGB12, crop=(0, 0, 4056, 3040)
+[10] size=(1332, 990), depth=8 бит, fps=147.91, packed=SRGGB8, unpacked=SRGGB8, crop=(696, 528, 2664, 1980)
+[11] size=(2028, 1080), depth=8 бит, fps=92.27, packed=SRGGB8, unpacked=SRGGB8, crop=(0, 440, 4056, 2160)
+[12] size=(2028, 1520), depth=8 бит, fps=66.38, packed=SRGGB8, unpacked=SRGGB8, crop=(0, 0, 4056, 3040)
+[13] size=(4056, 2160), depth=8 бит, fps=24.32, packed=SRGGB8, unpacked=SRGGB8, crop=(0, 440, 4056, 2160)
+[14] size=(4056, 3040), depth=8 бит, fps=17.39, packed=SRGGB8, unpacked=SRGGB8, crop=(0, 0, 4056, 3040)
+
+=====================================raw_test======================================================
+
+
+[1:47:29.565233607] [3179]  INFO Camera camera_manager.cpp:340 libcamera v0.7.1+rpt20260609
+[1:47:29.575345319] [3182]  INFO RPI pisp.cpp:720 libpisp version v1.6.0 29-06-2026 (16:17:40)
+[1:47:29.586958870] [3182]  INFO IPAProxy ipa_proxy.cpp:184 Using tuning file /usr/share/libcamera/ipa/rpi/pisp/imx477.json
+[1:47:29.596324411] [3182]  INFO Camera camera_manager.cpp:223 Adding camera '/base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a' for pipeline handler rpi/pisp
+[1:47:29.596375930] [3182]  INFO RPI pisp.cpp:1181 Registered camera /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a to CFE device /dev/media0 and ISP device /dev/media1 using PiSP variant BCM2712_D0
+[1:47:29.602967199] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.603086719] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.604652503] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 1332x990-BGGR_PISP_COMP1/RAW
+[1:47:29.605059320] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 1332x990-SBGGR10_1X10/RAW - Selected CFE format: 1332x990-PC1B/RAW
+[1:47:29.611279606] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.611322829] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.612037091] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1080-BGGR_PISP_COMP1/RAW
+[1:47:29.612190277] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1080-SBGGR10_1X10/RAW - Selected CFE format: 2028x1080-PC1B/RAW
+[1:47:29.617536819] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.617564356] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.618092174] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1520-BGGR_PISP_COMP1/RAW
+[1:47:29.618218470] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR10_1X10/RAW - Selected CFE format: 2028x1520-PC1B/RAW
+[1:47:29.625494799] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.625551799] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.626202894] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x2160-BGGR_PISP_COMP1/RAW
+[1:47:29.626343802] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x2160-SBGGR10_1X10/RAW - Selected CFE format: 4056x2160-PC1B/RAW
+[1:47:29.645923092] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.645958352] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.646450354] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x3040-BGGR_PISP_COMP1/RAW
+[1:47:29.646569984] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x3040-SBGGR10_1X10/RAW - Selected CFE format: 4056x3040-PC1B/RAW
+[1:47:29.667506595] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.667583910] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.668936398] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 1332x990-BGGR_PISP_COMP1/RAW
+[1:47:29.669291307] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 1332x990-SBGGR12_1X12/RAW - Selected CFE format: 1332x990-PC1B/RAW
+[1:47:29.676107503] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.676182837] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.677108452] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1080-BGGR_PISP_COMP1/RAW
+[1:47:29.677376731] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1080-SBGGR12_1X12/RAW - Selected CFE format: 2028x1080-PC1B/RAW
+[1:47:29.683500777] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.683549943] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.684194335] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1520-BGGR_PISP_COMP1/RAW
+[1:47:29.684348558] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR12_1X12/RAW - Selected CFE format: 2028x1520-PC1B/RAW
+[1:47:29.691915184] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.692116296] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.693371616] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x2160-BGGR_PISP_COMP1/RAW
+[1:47:29.693708396] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x2160-SBGGR12_1X12/RAW - Selected CFE format: 4056x2160-PC1B/RAW
+[1:47:29.711438696] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.711494770] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.712169829] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x3040-BGGR_PISP_COMP1/RAW
+[1:47:29.712316700] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x3040-SBGGR12_1X12/RAW - Selected CFE format: 4056x3040-PC1B/RAW
+[1:47:29.736395917] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.736521306] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.737480440] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 1332x990-SBGGR16/RAW
+[1:47:29.737655885] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 1332x990-SBGGR8_1X8/RAW - Selected CFE format: 1332x990-BYR2/RAW
+[1:47:29.744285267] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.744444452] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.745307512] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1080-SBGGR16/RAW
+[1:47:29.745547680] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1080-SBGGR8_1X8/RAW - Selected CFE format: 2028x1080-BYR2/RAW
+[1:47:29.758351958] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.760178485] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.761615602] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 2028x1520-SBGGR16/RAW
+[1:47:29.761795936] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR8_1X8/RAW - Selected CFE format: 2028x1520-BYR2/RAW
+[1:47:29.774096102] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.774179250] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.775069717] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x2160-SBGGR16/RAW
+[1:47:29.775248570] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x2160-SBGGR8_1X8/RAW - Selected CFE format: 4056x2160-BYR2/RAW
+[1:47:29.802004484] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.802061021] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.802688931] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 640x480-XBGR8888/sRGB (1) 4056x3040-SBGGR16/RAW
+[1:47:29.802822173] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 4056x3040-SBGGR8_1X8/RAW - Selected CFE format: 4056x3040-BYR2/RAW
+Выбранный режим сенсора:
+{'format': SRGGB12_CSI2P, 'unpacked': 'SRGGB12', 'bit_depth': 12, 'size': (2028, 1520), 'fps': 45.19, 'crop_limits': (0, 0, 4056, 3040), 'exposure_limits': (56, 674181621, 20000)}
+[1:47:29.834664109] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:47:29.834746906] [3182]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[1:47:29.835820244] [3179]  INFO Camera camera.cpp:1216 configuring streams: (0) 320x240-RGB888/SMPTE170M/Rec709/None/Full (1) 2028x1520-SBGGR16/RAW
+[1:47:29.836104912] [3182]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR12_1X12/RAW - Selected CFE format: 2028x1520-BYR2/RAW
+
+Фактически применённая конфигурация:
+{'use_case': 'video', 'transform': <libcamera.Transform 'identity'>, 'colour_space': <libcamera.ColorSpace 'SMPTE170M'>, 'buffer_count': 4, 'queue': True, 'main': {'format': 'RGB888', 'size': (320, 240), 'preserve_ar': True, 'stride': 960, 'framesize': 230400}, 'lores': None, 'raw': {'format': 'SBGGR16', 'size': (2028, 1520), 'stride': 4096, 'framesize': 6225920}, 'controls': {'NoiseReductionMode': <NoiseReductionModeEnum.Fast: 1>, 'FrameDurationLimits': (33333, 33333)}, 'sensor': {'bit_depth': 12, 'output_size': (2028, 1520)}, 'display': None, 'encode': 'main'}
+
+Параметры RAW:
+format    = SBGGR16
+size      = 2028 x 1520
+stride    = 4096 bytes
+bit depth = 12
+
+=== Буфер, который вернул Picamera2 ===
+shape = (1520, 4096)
+dtype = uint8
+min   = 0
+max   = 240
+
+=== После view(np.uint16) ===
+shape = (1520, 2048)
+dtype = uint16
+
+=== Активная область RAW ===
+shape = (1520, 2028)
+dtype = uint16
+min   = 4352
+max   = 8304
+
+=== Исходные значения сенсора ===
+bit depth = 12
+shift     = 4
+shape     = (1520, 2028)
+dtype     = uint16
+min       = 272
+max       = 519
+theoretical max = 4095
+
+Максимум среди padding-битов: 0
+
+Сохранено:
+  raw_frame_pi5_16bit.npy
+  raw_frame_native.npy
+  raw_frame_native.raw
+
+
+=============================================параметры первого видео в нужном формате==========
+Selected sensor mode:
+size: 2028x1520
+bit depth: 12
+max RAW value: 4095
+fps: 45.19
+unpacked: SRGGB12
+[2:09:55.430862860] [3266]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[2:09:55.430909564] [3266]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+[2:09:55.431543899] [3263]  INFO Camera camera.cpp:1216 configuring streams: (0) 320x240-RGB888/SMPTE170M/Rec709/None/Full (1) 2028x1520-SBGGR16/RAW
+[2:09:55.431692511] [3266]  INFO RPI pisp.cpp:1485 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/imx477@1a - Selected sensor format: 2028x1520-SBGGR12_1X12/RAW - Selected CFE format: 2028x1520-BYR2/RAW
+
+Actual RAW configuration:
+{'format': 'SBGGR16', 'size': (2028, 1520), 'stride': 4096, 'framesize': 6225920}
+
+Waiting for auto exposure...
+ExposureTime = 33013 us
+AnalogueGain = 16.000
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+

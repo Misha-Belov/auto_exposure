@@ -1,0 +1,49 @@
+{
+  "bayer_pattern": "BGGR",
+  "bit_depth": 12,
+  "shape": [
+    1520,
+    2028
+  ],
+  "metadata": {
+    "SensorTimestamp": 7285259171000,
+    "FrameWallClock": 1786119989737787392,
+    "ScalerCrop": [
+      2,
+      0,
+      4052,
+      3040
+    ],
+    "FocusFoM": 71,
+    "ExposureTime": 32999,
+    "ControlListSequence": 3757,
+    "DigitalGain": 1.0004181861877441,
+    "FrameDuration": 33323,
+    "SensorTemperature": 80.0,
+    "AeState": 0,
+    "ColourTemperature": 2627,
+    "Lux": 16.253902435302734,
+    "ColourGains": [
+      2.167860746383667,
+      3.1475753784179688
+    ],
+    "SensorBlackLevels": [
+      4096,
+      4096,
+      4096,
+      4096
+    ],
+    "AnalogueGain": 16.0,
+    "ColourCorrectionMatrix": [
+      1.9748594760894775,
+      -0.7156795263290405,
+      -0.2591899633407593,
+      -0.43473267555236816,
+      2.0987930297851562,
+      -0.6640604138374329,
+      -0.04917403683066368,
+      -0.8441071510314941,
+      1.8932812213897705
+    ]
+  }
+}
