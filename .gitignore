@@ -1,1 +1,2 @@
-data/raw_recordings/*
+data/raw-recordings/
+__pycache__/
