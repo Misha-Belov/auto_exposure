@@ -314,6 +314,52 @@ def histogram_statistics(
     }
 
 
+def find_balance_point(
+    histogram: np.ndarray,
+    max_value: int,
+) -> int:
+    """
+    Находим точку, где площадь гистограммы слева и справа
+    от неё примерно одинаковая.
+    """
+
+    count = int(histogram.sum())
+
+    if count <= 0:
+        return max_value // 2
+
+    cdf = np.cumsum(histogram.astype(np.float64))
+    midpoint = count / 2.0
+    balance_point = int(np.searchsorted(cdf, midpoint))
+
+    return int(np.clip(balance_point, 0, max_value))
+
+
+def estimate_auto_gain(
+    histogram: np.ndarray,
+    max_value: int,
+    current_gain: float,
+) -> float:
+    """
+    Подстраиваем gain так, чтобы балансная точка гистограммы
+    стремилась к середине доступного диапазона.
+    """
+
+    if current_gain <= 0:
+        current_gain = 1.0
+
+    balance_point = find_balance_point(histogram, max_value)
+    target_point = max_value / 2.0
+
+    if balance_point <= 0:
+        return float(np.clip(current_gain, 0.01, 8.0))
+
+    desired_gain = current_gain * (target_point / balance_point)
+    smoothed_gain = current_gain * 0.7 + desired_gain * 0.3
+
+    return float(np.clip(smoothed_gain, 0.01, 8.0))
+
+
 # ============================================================
 # HISTOGRAM DRAWING
 # ============================================================
@@ -324,6 +370,7 @@ def draw_histogram(
     statistics: dict,
     width: int,
     height: int,
+    label: str = "RAW histogram",
 ) -> np.ndarray:
 
     canvas = np.zeros(
@@ -587,7 +634,7 @@ def draw_histogram(
     # --------------------------------------------------------
 
     text = (
-        f"RAW histogram 0..{max_value}     "
+        f"{label} 0..{max_value}     "
         f"mean={statistics['mean']:.1f}     "
         f"P1={statistics['p01']}     "
         f"P50={statistics['p50']}     "
@@ -727,19 +774,12 @@ def main() -> None:
         dashboard_height,
     )
 
-    cv2.createTrackbar(
-        "Display gain x100",
-        WINDOW_NAME,
-        100,
-        800,
-        lambda x: None,
-    )
-
     print("\nControls:")
     print("Q / Esc = quit")
-    print("Display gain changes only visualization")
+    print("Automatic gain adapts from histogram balance")
 
     frame_index = 0
+    auto_gain = 1.0
 
     while True:
         raw = frames[frame_index]
@@ -766,25 +806,49 @@ def main() -> None:
             copy=False,
         )
 
-        display_gain = max(
-            cv2.getTrackbarPos(
-                "Display gain x100",
-                WINDOW_NAME,
-            )
-            / 100.0,
-            0.01,
+        processed_for_hist = np.clip(
+            processed_raw.astype(np.float32) * auto_gain,
+            0,
+            max_value,
+        ).astype(np.uint16, copy=False)
+
+        histogram_processed = calculate_histogram(
+            processed_for_hist,
+            max_value,
+        )
+
+        auto_gain = estimate_auto_gain(
+            histogram_processed,
+            max_value,
+            auto_gain,
+        )
+
+        processed_for_hist = np.clip(
+            processed_raw.astype(np.float32) * auto_gain,
+            0,
+            max_value,
+        ).astype(np.uint16, copy=False)
+
+        histogram_processed = calculate_histogram(
+            processed_for_hist,
+            max_value,
+        )
+
+        balance_point = find_balance_point(
+            histogram_processed,
+            max_value,
         )
 
         raw_preview = raw_to_preview(
             raw,
             max_value,
-            display_gain,
+            1.0,
         )
 
         processed_preview = raw_to_preview(
-            processed_raw,
+            processed_for_hist,
             max_value,
-            display_gain,
+            1.0,
         )
 
         add_title(
@@ -797,17 +861,41 @@ def main() -> None:
             "Processed RAW Bayer",
         )
 
-        histogram_image = draw_histogram(
+        # Draw two histograms: original and processed, side by side
+        histogram_image_raw = draw_histogram(
             histogram,
             max_value,
             statistics,
-            dashboard_width,
+            PREVIEW_WIDTH,
             HISTOGRAM_HEIGHT,
+            label="Original RAW histogram",
+        )
+
+        statistics_processed = histogram_statistics(
+            histogram_processed
+        )
+
+        histogram_image_processed = draw_histogram(
+            histogram_processed,
+            max_value,
+            statistics_processed,
+            PREVIEW_WIDTH,
+            HISTOGRAM_HEIGHT,
+            label="Processed RAW histogram",
+        )
+
+        histogram_image = np.hstack(
+            (
+                histogram_image_raw,
+                histogram_image_processed,
+            )
         )
 
         info = (
             f"frame {frame_index}/{frames.shape[0] - 1} | "
             f"recording {recording_dir.name} | "
+            f"gain={auto_gain:.2f} | "
+            f"balance={balance_point} | "
             f"mean={statistics['mean']:.1f} | "
             f"P50={statistics['p50']}"
         )
