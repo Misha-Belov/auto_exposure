@@ -4,7 +4,8 @@
 Exposure = K * ln(median / (max_value - median))
 
 Отрицательное значение — темно, положительное — светло.
-На границах диапазона результат равен -inf или +inf.
+Пиксели со значениями 0 и max_value исключаются из расчёта медианы.
+Если других пикселей нет, оценка не определена (N/A).
 
 Запуск: python3 src/raw_proc_estim.py --coefficient 1 --loop
 """
@@ -25,20 +26,31 @@ WINDOW_NAME = "RAW Exposure Estimator"
 EXPOSURE_COEFFICIENT = 100.0
 
 
+def find_unclipped_median(
+    histogram: np.ndarray,
+    max_value: int,
+) -> float:
+    """Находим медиану только среди значений 1..max_value-1."""
+    valid_histogram = histogram[1:max_value]
+    count = valid_histogram.sum()
+
+    if count == 0:
+        return float("nan")
+
+    cumulative = np.cumsum(valid_histogram)
+    median_index = np.searchsorted(cumulative, count / 2.0)
+
+    # Срез начинается со значения RAW=1, поэтому возвращаем смещение.
+    return float(median_index + 1)
+
+
 def estimate_exposure(
     histogram: np.ndarray,
     max_value: int,
     coefficient: float = EXPOSURE_COEFFICIENT,
 ) -> float:
-    """Переводим медиану RAW в оценку яркости без сглаживания."""
-    median = recording.find_balance_point(histogram, max_value)
-
-    if median == 0:
-        return -float("inf")
-
-    if median == max_value:
-        return float("inf")
-
+    """Переводим медиану без клиппинга в оценку яркости без сглаживания."""
+    median = find_unclipped_median(histogram, max_value)
     ratio = median / (max_value - median)
     exposure = coefficient * np.log(ratio)
 
@@ -60,8 +72,9 @@ def create_dashboard(
         display_gain=1.0,
     )
 
+    exposure_text = f"{exposure:+.3f}" if np.isfinite(exposure) else "N/A"
     preview_title = (
-        f"Exposure: {exposure:+.3f} | "
+        f"Exposure: {exposure_text} | "
         f"Frame {frame_index + 1}/{frame_count}"
     )
     recording.add_title(preview, preview_title)
@@ -75,9 +88,11 @@ def create_dashboard(
         recording.HISTOGRAM_HEIGHT,
     )
 
+    median = find_unclipped_median(histogram, max_value)
+    median_text = f"{median:g}" if np.isfinite(median) else "N/A"
     graph_title = (
         f"RAW 0..{max_value} | "
-        f"P50={statistics['p50']} | (-) dark / (+) bright"
+        f"Valid P50={median_text} | (-) dark / (+) bright"
     )
     recording.add_title(graph, graph_title)
 
