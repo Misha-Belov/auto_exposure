@@ -2,8 +2,12 @@
 """Оценка яркости RAW-записи по медиане гистограммы.
 
 Exposure = K * ln(median / (max_value - median))
+Clipping = K * ln((1 + balance) / (1 - balance))
+balance = (число белых - число чёрных пикселей) / число всех пикселей
 
 Отрицательное значение — темно, положительное — светло.
+Перед анализом вычитается SensorBlackLevels из metadata.jsonl.
+Полезный диапазон RAW нормируется к 0..max_value.
 Пиксели со значениями 0 и max_value исключаются из расчёта медианы.
 Если других пикселей нет, оценка не определена (N/A).
 
@@ -18,12 +22,15 @@ import numpy as np
 
 if __package__:
     from . import raw_proc_f as recording
+    from .raw_calibration import correct_black_level, load_black_levels
 else:
     import raw_proc_f as recording
+    from raw_calibration import correct_black_level, load_black_levels
 
 
 WINDOW_NAME = "RAW Exposure Estimator"
 EXPOSURE_COEFFICIENT = 100.0
+CLIPPING_COEFFICIENT = 100.0
 
 
 def find_unclipped_median(
@@ -57,15 +64,46 @@ def estimate_exposure(
     return float(exposure)
 
 
+def estimate_clipping(
+    histogram: np.ndarray,
+    max_value: int,
+    coefficient: float = CLIPPING_COEFFICIENT,
+) -> float:
+    """Оценка по разности долей пикселей на границах диапазона RAW.
+
+    Чёрный кадр: -inf; белый: +inf; равные доли клиппинга: 0.
+    При отсутствии клиппинга результат также равен 0.
+    """
+    total = int(histogram.sum())
+
+    if total == 0:
+        return float("nan")
+
+    black_count = int(histogram[0])
+    white_count = int(histogram[max_value])
+
+    if black_count == total:
+        return -float("inf")
+
+    if white_count == total:
+        return float("inf")
+
+    balance = (white_count - black_count) / total
+    ratio = (1.0 + balance) / (1.0 - balance)
+
+    return float(coefficient * np.log(ratio))
+
+
 def create_dashboard(
     raw: np.ndarray,
     histogram: np.ndarray,
     max_value: int,
     exposure: float,
+    clipping: float,
     frame_index: int,
     frame_count: int,
 ) -> np.ndarray:
-    """Собираем исходный кадр и гистограмму в одно окно."""
+    """Показываем RAW после коррекции уровня чёрного и его гистограмму."""
     preview = recording.raw_to_preview(
         raw,
         max_value,
@@ -90,9 +128,10 @@ def create_dashboard(
 
     median = find_unclipped_median(histogram, max_value)
     median_text = f"{median:g}" if np.isfinite(median) else "N/A"
+    clipping_text = "N/A" if np.isnan(clipping) else f"{clipping:+.3f}"
     graph_title = (
-        f"RAW 0..{max_value} | "
-        f"Valid P50={median_text} | (-) dark / (+) bright"
+        f"Clipping: {clipping_text} | "
+        f"Valid P50={median_text}"
     )
     recording.add_title(graph, graph_title)
 
@@ -119,7 +158,7 @@ def main() -> None:
     parser.add_argument(
         "--coefficient",
         type=float,
-        default=EXPOSURE_COEFFICIENT,
+        default=CLIPPING_COEFFICIENT,
         help="Положительный масштаб K",
     )
     args = parser.parse_args()
@@ -148,9 +187,12 @@ def main() -> None:
     max_value = (1 << bit_depth) - 1
     frame_count = len(frames)
     frame_index = 0
+    black_levels = load_black_levels(directory, bit_depth, frame_count)
+    raw_format = sensor.get("raw_format", "")
 
     print(f"Recording: {directory}")
     print(f"Coefficient: {args.coefficient}")
+    print(f"Native black levels, first frame: {black_levels[0]}")
     print("Negative = dark; positive = bright")
     print("Q/Esc: quit; N/P: next/previous frame")
 
@@ -159,9 +201,20 @@ def main() -> None:
 
     try:
         while True:
-            raw = frames[frame_index]
+            raw = correct_black_level(
+                frames[frame_index],
+                max_value,
+                black_levels[frame_index],
+                raw_format,
+            )
             histogram = recording.calculate_histogram(raw, max_value)
             exposure = estimate_exposure(
+                histogram,
+                max_value,
+                args.coefficient,
+            )
+
+            clipping = estimate_clipping(
                 histogram,
                 max_value,
                 args.coefficient,
@@ -172,6 +225,7 @@ def main() -> None:
                 histogram,
                 max_value,
                 exposure,
+                clipping,
                 frame_index,
                 frame_count,
             )
