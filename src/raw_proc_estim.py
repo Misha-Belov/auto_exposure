@@ -3,8 +3,10 @@
 
 Exposure = K * ln(median / (max_value - median))
 Clipping = K * ln((1 + balance) / (1 - balance))
-balance = (число белых - число чёрных пикселей) / число всех пикселей
+balance = (вес белых - вес чёрных пикселей) / суммарный вес
 
+Гистограмма учитывает положение: центр имеет вес 1, края — EDGE_WEIGHT.
+Обе оценки используют эту взвешенную гистограмму.
 Отрицательное значение — темно, положительное — светло.
 Перед анализом вычитается SensorBlackLevels из metadata.jsonl.
 Полезный диапазон RAW нормируется к 0..max_value.
@@ -31,13 +33,50 @@ else:
 WINDOW_NAME = "RAW Exposure Estimator"
 EXPOSURE_COEFFICIENT = 100.0
 CLIPPING_COEFFICIENT = 100.0
+EDGE_WEIGHT = 0.1  # Вес границы относительно центра; 1.0 отключает приоритет.
+
+
+def create_center_weights(
+    shape: tuple[int, int],
+    edge_weight: float = EDGE_WEIGHT,
+) -> np.ndarray:
+    """Плавно уменьшаем вес от центра к границам кадра.
+
+    x и y нормированы к -1..1:
+        weight = edge_weight + (1 - edge_weight) * (1 - x²) * (1 - y²)
+    """
+    if not 0 < edge_weight <= 1:
+        raise ValueError("Вес края должен быть больше 0 и не больше 1")
+
+    height, width = shape
+    x = np.linspace(-1.0, 1.0, width) if width > 1 else np.zeros(1)
+    y = np.linspace(-1.0, 1.0, height) if height > 1 else np.zeros(1)
+    center_priority = np.outer(1.0 - y**2, 1.0 - x**2)
+
+    return edge_weight + (1.0 - edge_weight) * center_priority
+
+
+def calculate_weighted_histogram(
+    raw: np.ndarray,
+    max_value: int,
+    weights: np.ndarray,
+) -> np.ndarray:
+    """Вместо количества пикселей суммируем их пространственные веса."""
+    if raw.shape != weights.shape:
+        raise ValueError("Размер карты весов должен совпадать с размером RAW")
+
+    return np.bincount(
+        raw.ravel(),
+        weights=weights.ravel(),
+        minlength=max_value + 1,
+    )
 
 
 def find_unclipped_median(
     histogram: np.ndarray,
     max_value: int,
 ) -> float:
-    """Находим медиану только среди значений 1..max_value-1."""
+    """Находим медиану по весам значений 1..max_value-1."""
     valid_histogram = histogram[1:max_value]
     count = valid_histogram.sum()
 
@@ -69,26 +108,26 @@ def estimate_clipping(
     max_value: int,
     coefficient: float = CLIPPING_COEFFICIENT,
 ) -> float:
-    """Оценка по разности долей пикселей на границах диапазона RAW.
+    """Оценка по разности взвешенных долей клиппинга.
 
     Чёрный кадр: -inf; белый: +inf; равные доли клиппинга: 0.
     При отсутствии клиппинга результат также равен 0.
     """
-    total = int(histogram.sum())
+    total = float(histogram.sum())
 
     if total == 0:
         return float("nan")
 
-    black_count = int(histogram[0])
-    white_count = int(histogram[max_value])
+    black_weight = float(histogram[0])
+    white_weight = float(histogram[max_value])
 
-    if black_count == total:
+    if black_weight == total:
         return -float("inf")
 
-    if white_count == total:
+    if white_weight == total:
         return float("inf")
 
-    balance = (white_count - black_count) / total
+    balance = (white_weight - black_weight) / total
     ratio = (1.0 + balance) / (1.0 - balance)
 
     return float(coefficient * np.log(ratio))
@@ -131,7 +170,7 @@ def create_dashboard(
     clipping_text = "N/A" if np.isnan(clipping) else f"{clipping:+.3f}"
     graph_title = (
         f"Clipping: {clipping_text} | "
-        f"Valid P50={median_text}"
+        f"Weighted P50={median_text}"
     )
     recording.add_title(graph, graph_title)
 
@@ -189,9 +228,11 @@ def main() -> None:
     frame_index = 0
     black_levels = load_black_levels(directory, bit_depth, frame_count)
     raw_format = sensor.get("raw_format", "")
+    weights = create_center_weights(frames.shape[1:])
 
     print(f"Recording: {directory}")
     print(f"Coefficient: {args.coefficient}")
+    print(f"Histogram weights: center=1, edge={EDGE_WEIGHT}")
     print(f"Native black levels, first frame: {black_levels[0]}")
     print("Negative = dark; positive = bright")
     print("Q/Esc: quit; N/P: next/previous frame")
@@ -207,7 +248,11 @@ def main() -> None:
                 black_levels[frame_index],
                 raw_format,
             )
-            histogram = recording.calculate_histogram(raw, max_value)
+            histogram = calculate_weighted_histogram(
+                raw,
+                max_value,
+                weights,
+            )
             exposure = estimate_exposure(
                 histogram,
                 max_value,
